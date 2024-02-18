@@ -24,16 +24,6 @@ import matplotlib.pyplot as plt
 
 ### thresholding implementation:
 
-def data_load(path):
-    '''
-    Loads data from path
-    @param path: path to the data
-    @return: data
-    '''
-    data = pd.read_csv(path, index_col=False)
-    data = data.drop(data.columns[0], axis=1)
-    return data
-
 def clean_data(text):
     '''
     Performs text cleaning by performing lemmatization and removing stop words.
@@ -47,6 +37,22 @@ def clean_data(text):
     cleaned_tokens = [lemmatizer.lemmatize(word) for word in tokens if word not in stopwords.words('english')]
     cleaned_text = ' '.join(cleaned_tokens)
     return cleaned_text
+
+
+pipeline = Pipeline([
+    ('tfidf', TfidfVectorizer(preprocessor=clean_data, ngram_range=(1, 2))),
+    ('classifier', RandomForestClassifier())
+])
+
+def data_load(path):
+    '''
+    Loads data from path
+    @param path: path to the data
+    @return: data
+    '''
+    data = pd.read_csv(path, index_col=False)
+    data = data.drop(data.columns[0], axis=1)
+    return data
 
 def run_rf(data):
     '''
@@ -62,17 +68,43 @@ def run_rf(data):
     new_df = pd.concat([class_0_undersampled, class_1])
     data = new_df.sample(frac=1, random_state=42).reset_index(drop=True)
 
-    pipeline = Pipeline([
-        ('tfidf', TfidfVectorizer(preprocessor=clean_data, ngram_range=(1, 2))),
-        ('classifier', RandomForestClassifier())
-    ])
+    # pipeline = Pipeline([
+    #     ('tfidf', TfidfVectorizer(preprocessor=clean_data, ngram_range=(1, 2))),
+    #     ('classifier', RandomForestClassifier())
+    # ])
 
     X_train, X_test, y_train, y_test = train_test_split(data['student_answer'], data['correct'], test_size=0.2, random_state=42)
     pipeline.fit(X_train, y_train)
     y_pred = pipeline.predict(X_test)
-    f1_score = f1_score(y_test, y_pred)
+    f1 = f1_score(y_test, y_pred)
     
-    return f1_score
+    return f1
+
+def predict_answer(new_answer, model):
+    '''
+    Preprocesses the new answer and predicts whether it's correct or not using our model.
+    @param new_answer: new input answer
+    @param model: trained model
+    @return: prediction of whether it's correct or not
+    '''
+    cleaned_answer = clean_data(new_answer)
+    prediction = model.predict([cleaned_answer])[0]
+    return prediction
+
+if __name__ == "__main__":
+    data = data_load("data/data_queue_final.csv")
+    f1 = run_rf(data)
+    print("F1 Score:", f1)
+
+    while True:
+        cur_answer = input("Enter your response (type 'quit' to exit): ")
+        if cur_answer.lower() == 'quit':
+            break
+        prediction = predict_answer(cur_answer, pipeline)
+        if prediction == 1:
+            print("The answer is correct.")
+        else:
+            print("The answer is incorrect.")
 
 
 
