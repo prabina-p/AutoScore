@@ -1,3 +1,17 @@
+import pandas as pd
+import re
+from sklearn.ensemble import RandomForestClassifier
+from sklearn.pipeline import Pipeline
+from sklearn.model_selection import train_test_split
+from sklearn.metrics import accuracy_score
+from sklearn.feature_extraction.text import TfidfVectorizer
+from sklearn.metrics import f1_score, precision_score, recall_score
+import nltk
+from nltk.stem import WordNetLemmatizer
+from nltk.corpus  import stopwords
+nltk.download('punkt')
+nltk.download('wordnet')
+nltk.download('stopwords')
 import chromadb
 import pandas as pd
 import numpy as np
@@ -10,6 +24,51 @@ import matplotlib.pyplot as plt
 
 ### thresholding implementation:
 
+def data_load(path):
+    '''
+    Loads data from path
+    @param path: path to the data
+    @return: data
+    '''
+    data = pd.read_csv(path, index_col=False)
+    data = data.drop(data.columns[0], axis=1)
+    return data
+
+def clean_data(text):
+    '''
+    Performs text cleaning by performing lemmatization and removing stop words.
+    @param text: str sentences
+    @return: cleaned text
+    '''
+    lowered = text.lower() 
+    removed = re.sub(r'[^a-z]', ' ', lowered)  
+    tokens = nltk.word_tokenize(removed)
+    lemmatizer = WordNetLemmatizer()
+    cleaned_tokens = [lemmatizer.lemmatize(word) for word in tokens if word not in stopwords.words('english')]
+    cleaned_text = ' '.join(cleaned_tokens)
+    return cleaned_text
+
+def run_rf(data):
+    '''
+    Pre-processes data using TF-IDF and N-Gram and trains using Random Forest Classifier.
+    @param data: data to train model on
+    @return: f1-score of the model
+    '''
+    data['student_answer'] = data['student_answer'].apply(clean_data)
+
+    pipeline = Pipeline([
+        ('tfidf', TfidfVectorizer(preprocessor=clean_data, ngram_range=(1, 2))),
+        ('classifier', RandomForestClassifier())
+    ])
+
+    X_train, X_test, y_train, y_test = train_test_split(data['student_answer'], data['correct'], test_size=0.2, random_state=42)
+    pipeline.fit(X_train, y_train)
+    y_proba = pipeline.predict_proba(X_test)[:, 1]
+    threshold = 0.3
+    y_pred_threshold = (y_proba >= threshold).astype(int)
+    f1_threshold = f1_score(y_test, y_pred_threshold)
+
+    return f1_threshold
 
 
 
