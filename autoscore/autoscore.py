@@ -1,5 +1,6 @@
 import pandas as pd
 import re
+import statistics
 from sklearn.ensemble import RandomForestClassifier
 from sklearn.pipeline import Pipeline
 from sklearn.model_selection import train_test_split
@@ -21,9 +22,12 @@ from sklearn.feature_extraction.text import CountVectorizer
 import matplotlib.pyplot as plt
 
 
-### chat gpt implementation:
+### chat gpt variables::
 API_KEY = "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"
 client = OpenAI(api_key=API_KEY)
+
+### chroma variables:
+THRESHOLD = 0.65
 
 
 
@@ -80,13 +84,13 @@ def run_rf(data):
     return f1_score
 
 
+### chroma db implementation:
+
 # A function to get chromaDB database size
 def get_dababase_size(name):
     
     return None
 
-
-### chroma db implementation:
 def create_client_collection():
     ''' 
     Create a client and collection using ChromaDB
@@ -139,7 +143,7 @@ def add_to_collection(collection, df_corr, df_incorr):
         ids=ids,
     )
 
-def query(collection, student_answer, k):
+def query(collection, student_answer, k=3):
     '''
     Query the collection for the student answer
     @param collection: the collection to query
@@ -148,8 +152,8 @@ def query(collection, student_answer, k):
     @return: the response from the query
     '''
     response = collection.query(
-        document=student_answer,
-        k=k,
+        query_texts=[student_answer],
+        n_results=k
     )
     return response
 
@@ -161,7 +165,7 @@ def predict(response_json):
     '''
     correct_sum = [x['correct'] for x in response_json['metadatas'][0]].count('True')
     weighted_vote = (correct_sum/3) >= 0.5
-    return weighted_vote
+    return weighted_vote, statistics.stdev(response_json['distances'][0])
 
 
 # True or False
