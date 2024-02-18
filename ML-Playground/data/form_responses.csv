@@ -1,0 +1,27 @@
+Timestamp,"What is a queue? (In computer science)
+
+You can either give a CORRECT response (""A queue is a FIFO data structure"") or INCORRECT response (""A queue is a binary search tree with red and black nodes""). Don't use these example responses. Your answer can be long or short, but keep it to 4 sentences or under.",Was your response CORRECT or INCORRECT?
+2/17/2024 20:39:54,A queue is a common surgical tool used in most hospitals.,INCORRECT
+2/17/2024 20:43:03,A queue I think seems to be a data structure that follows the LIFO principle.,INCORRECT
+2/17/2024 20:44:46,FIFO cause that’s just easier,CORRECT
+2/17/2024 20:45:15,queue is like a stack,INCORRECT
+2/17/2024 20:45:48,"A queue is a data structure that has a rule on how objects can be accessed based on how they enter the data structure. We can add, remove or access the data at any location.",INCORRECT
+2/17/2024 20:47:11,It’s a first in first out data structure that acts like a list!,CORRECT
+2/17/2024 20:48:01,It's a data structure for storing elements contiguously in memory,INCORRECT
+2/17/2024 20:49:14,a queue is the thing u stand in to get ur food at tapex,INCORRECT
+2/17/2024 20:51:30,A queue is a LIFO data structure.,INCORRECT
+2/17/2024 20:53:31,A queue is a bouncy ball where the snowman likes to smile and participate in the lightsaber battle at TreeHacks.,INCORRECT
+2/17/2024 20:56:42,first in first out data storing structure. used to store beast data,CORRECT
+2/17/2024 21:05:31,"queue is a first in first out, or LIFO, data structure.",INCORRECT
+2/17/2024 21:05:44,it is ur mum,INCORRECT
+2/17/2024 21:14:15,I’m not very sure? ,INCORRECT
+2/17/2024 21:15:42,"a list of data items, commands, etc., stored so as to be retrievable in a definite order, usually the order of insertion.",CORRECT
+2/17/2024 21:16:28,It’s a list of stuff where the first thing that was inputted into it is the first thing you’d get when you retrieve something,CORRECT
+2/17/2024 21:24:28,"Sorry, I don't know. But please give credit. ",INCORRECT
+2/17/2024 21:25:07,A queue is a sorting algorithm which eliminates any value which is not in sorted order.,INCORRECT
+2/17/2024 21:27:01,A queue is a line up of things.,INCORRECT
+2/17/2024 21:37:12,A first in first out data structure ,CORRECT
+2/17/2024 22:37:01,"A queue is a stack of sequenced tasks, undertaken by the machine upon which it is being run. It involves scheduling, prioritizing, context switching etc.",INCORRECT
+2/17/2024 22:44:44,"A queue in computer science is the 81st or 113th character on the ASCII table. It is located in the upper left corner of the keyboard, and legend tells that it may be used following a colon to exit VIM.",INCORRECT
+2/17/2024 23:43:08,"a queue is a abstract data type with a private attribute _items which is a list. Methods that can be used on the queue are enqueue, dequeue, and is_empty. Enqueue adds an item to the back of the list, while dequeue removes and returns the first item in the list.",CORRECT
+2/18/2024 0:29:16,"A data structure that can store elements, which has the property that the last item added will be the last to be removed (or first-in-first-out).",CORRECT
