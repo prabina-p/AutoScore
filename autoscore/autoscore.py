@@ -21,6 +21,11 @@ from sklearn.feature_extraction.text import CountVectorizer
 import matplotlib.pyplot as plt
 
 
+### chat gpt implementation:
+API_KEY = "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"
+client = OpenAI(api_key=API_KEY)
+
+
 
 ### thresholding implementation:
 
@@ -148,11 +153,6 @@ def predict(response_json):
     correct_sum = [x['correct'] for x in response_json['metadatas'][0]].count('True')
     weighted_vote = (correct_sum/3) >= 0.5
     return weighted_vote
-
-
-### chat gpt implementation:
-API_KEY = "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"
-client = OpenAI(api_key=API_KEY)
 
 
 # True or False

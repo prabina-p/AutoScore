@@ -15,6 +15,7 @@ class State(rx.State):
 
     correctness: bool  # Correct -> True
     gpt_feedback: str  # Feedback from GPT
+    
 
     def add_item(self):
         """Add a new item to the todo list."""
@@ -23,7 +24,6 @@ class State(rx.State):
     def display_result(self):
         self.correctness = bot_compare(question=self.question, solution="SomeSolution", student_answer=self.userInput)
         self.gpt_feedback = None if self.correctness else bot_suggests(question=self.question, solution="SomeSolution", student_answer=self.userInput)
-        
         return
 
 def index() -> rx.Component:
