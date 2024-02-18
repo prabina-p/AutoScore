@@ -80,6 +80,11 @@ def run_rf(data):
     return f1_score
 
 
+# A function to get chromaDB database size
+def get_dababase_size(name):
+    
+    return None
+
 
 ### chroma db implementation:
 def create_client_collection():

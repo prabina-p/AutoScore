@@ -12,6 +12,7 @@ class State(rx.State):
     new_item: str
     #index of which question
     question: str 
+    collection_size: int
 
     correctness: bool  # Correct -> True
     gpt_feedback: str  # Feedback from GPT
@@ -37,6 +38,9 @@ def index() -> rx.Component:
             rx.select(questionBank, default_value=questionBank[0], placeholder="Select a question",
                        radius="full", value=State.question, on_change=State.set_question, width="300px"),
             rx.button("Submit answer", on_click=State.display_result()),  
+            rx.spacer(),
+            rx.box(State.collection_size, background_color="lilac", width="20%"), ##add database stuff here
+
         ),
         rx.text_area(
             id="new_item",
