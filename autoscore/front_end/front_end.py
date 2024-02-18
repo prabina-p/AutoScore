@@ -1,4 +1,5 @@
 import reflex as rx
+from autoscore import bot_compare, bot_suggests
 
 questionBank = ["Explain a binary search tree", "What is a queue in computer science?", "What is a capacitor"]
 questionID = ["Queue", "Binary", "Capacitor"]
@@ -12,9 +13,18 @@ class State(rx.State):
     #index of which question
     question: str 
 
+    correctness: bool  # Correct -> True
+    gpt_feedback: str  # Feedback from GPT
+
     def add_item(self):
         """Add a new item to the todo list."""
         self.userInput = self.new_item
+    
+    def display_result(self):
+        self.correctness = bot_compare(question=self.question, solution="SomeSolution", student_answer=self.userInput)
+        self.gpt_feedback = None if self.correctness else bot_suggests(question=self.question, solution="SomeSolution", student_answer=self.userInput)
+        
+        return
 
 def index() -> rx.Component:
     """A view of the todo list.
@@ -24,11 +34,9 @@ def index() -> rx.Component:
     """
     return rx.container(
         rx.hstack(
-            rx.card(questionBank[0],width="250px",),
-            rx.select(["Queue", "Binary", "Capacitor"], default_value="Queue", placeholder="Select Question",
-                       radius="full", value=State.question, on_change=State.set_question, width="150px"),
-            rx.button("Submit answer", on_click=rx.redirect("/grade")),
-            rx.card(State.question)
+            rx.select(questionBank, default_value=questionBank[0], placeholder="Select a question",
+                       radius="full", value=State.question, on_change=State.set_question, width="300px"),
+            rx.button("Submit answer", on_click=State.display_result()),  
         ),
         rx.text_area(
             id="new_item",
@@ -42,7 +50,10 @@ def index() -> rx.Component:
             height="300px",
         ),
         rx.text_area(
-            value=State.userInput
+            value=f"Correctness: {State.correctness}, Suggestions: {State.gpt_feedback}",
+            height="300px",
+            bg="gray",
+            placeholder="Feedback here..."
         ),
         size="2",
         margin_top="5em",
