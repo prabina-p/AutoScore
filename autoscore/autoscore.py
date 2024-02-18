@@ -1,3 +1,25 @@
+import pandas as pd
+import numpy as np
+
+from sklearn.feature_extraction.text import CountVectorizer, TfidfTransformer
+from sklearn.ensemble import RandomForestClassifier
+from sklearn.pipeline import Pipeline
+from sklearn.model_selection import train_test_split, GridSearchCV
+from sklearn.metrics import classification_report, accuracy_score
+from sklearn.metrics.pairwise import cosine_similarity
+from sklearn.feature_extraction.text import TfidfVectorizer
+from sklearn.svm import SVC
+from sklearn.linear_model import LogisticRegression
+from sklearn.metrics import f1_score, precision_score, recall_score
+
+import nltk
+from nltk.stem import WordNetLemmatizer
+from nltk.corpus  import stopwords
+import re
+nltk.download('punkt')
+nltk.download('wordnet')
+nltk.download('stopwords')
+
 import chromadb
 import pandas as pd
 import numpy as np
