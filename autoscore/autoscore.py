@@ -160,7 +160,7 @@ client = OpenAI(api_key=API_KEY)
 
 
 # True or False
-def bot_compare(question: str, solution: str, student_answer: str, special_requirements: str = None, strictness: int = 7) -> bool:
+def bot_compare(question: str, solution: str, student_answer: str, special_requirements: str = None, strictness: int = 5) -> bool:
 	"""
 	Compare the student's answer with the standard answer under the context provided by the question.
 	:param question: The question.
