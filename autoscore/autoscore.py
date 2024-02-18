@@ -61,6 +61,12 @@ def run_rf(data):
     '''
     data['student_answer'] = data['student_answer'].apply(clean_data)
 
+    class_0 = data[data['correct'] == 0]
+    class_1 = data[data['correct'] == 1]
+    class_0_undersampled = class_0.sample(n=len(class_1), random_state=42)
+    new_df = pd.concat([class_0_undersampled, class_1])
+    data = new_df.sample(frac=1, random_state=42).reset_index(drop=True)
+
     pipeline = Pipeline([
         ('tfidf', TfidfVectorizer(preprocessor=clean_data, ngram_range=(1, 2))),
         ('classifier', RandomForestClassifier())
@@ -68,12 +74,10 @@ def run_rf(data):
 
     X_train, X_test, y_train, y_test = train_test_split(data['student_answer'], data['correct'], test_size=0.2, random_state=42)
     pipeline.fit(X_train, y_train)
-    y_proba = pipeline.predict_proba(X_test)[:, 1]
-    threshold = 0.3
-    y_pred_threshold = (y_proba >= threshold).astype(int)
-    f1_threshold = f1_score(y_test, y_pred_threshold)
-
-    return f1_threshold
+    y_pred = pipeline.predict(X_test)
+    f1_score = f1_score(y_test, y_pred)
+    
+    return f1_score
 
 
 
