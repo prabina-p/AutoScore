@@ -4,3 +4,10 @@
 /front-end/venv
 /venv/
 __pycache__/
+.venv/
+venv/
+front-end/.web
+*.db
+*.py[cod]
+.web
+__pycache__/
