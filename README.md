@@ -20,9 +20,8 @@ We used ChromaDB to handle our vector database operations and GPT4 to provide fe
 
 ## Demo
 
-* [Click for demo video!](https://youtu.be/S7EiVUkjzv4)
-* [Click for slides!](https://docs.google.com/presentation/d/1RBxTbz7ldAjXelZbIjB6Gruq3qAe4EMrT1bdpLyCLMM/edit?usp=sharing)
-
+* <a href="https://youtu.be/S7EiVUkjzv4" target="_blank">Click for demo video!</a>
+* <a href="https://docs.google.com/presentation/d/1RBxTbz7ldAjXelZbIjB6Gruq3qAe4EMrT1bdpLyCLMM/edit?usp=sharing" target="_blank">Click for slides!</a>
 
 
 ## Built With
