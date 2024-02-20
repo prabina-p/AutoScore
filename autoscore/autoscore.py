@@ -23,7 +23,7 @@ import matplotlib.pyplot as plt
 
 
 ### chat gpt variables::
-API_KEY = "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"
+API_KEY = "12345" # Fake API key, please use your real API key
 client = OpenAI(api_key=API_KEY)
 
 ### chroma variables:
