@@ -20,7 +20,9 @@ We used ChromaDB to handle our vector database operations and GPT4 to provide fe
 
 ## Demo
 
-https://youtu.be/S7EiVUkjzv4
+* [Click for demo video!](https://youtu.be/S7EiVUkjzv4)
+* [Click for slides!](https://docs.google.com/presentation/d/1RBxTbz7ldAjXelZbIjB6Gruq3qAe4EMrT1bdpLyCLMM/edit?usp=sharing)
+
 
 
 ## Built With
@@ -29,4 +31,5 @@ https://youtu.be/S7EiVUkjzv4
 * gpt-4
 * python
 * reflex
-*scikit-learn
+* scikit-learn
+
